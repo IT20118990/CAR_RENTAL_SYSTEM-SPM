@@ -35,17 +35,9 @@ export default function CardView() {
 
   const [cardsDatas, setCardsDatas] = useState<CreditCard[]>([]);
 
-  const config = localStorage.getItem('access_token')?{
-    headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` }
-  }:{};
 
   useEffect(() => {
     const fetchCard = async () => {
-
-      const res = await axios.get('http://localhost:5000/api/cards',config)
-      const cards: CreditCard[] = res.data
-      setCardsDatas(cards)
-      console.log(cards)
 
     }
     fetchCard()
@@ -58,27 +50,12 @@ export default function CardView() {
 
   const params = useParams();
   const [posts, setPosts] =useState<any>([]);
-  useEffect(()=> {
-      axios.get(`http://localhost:5000/api/bookings/getone/${params.booking_id}`)
-      .then(res => {
-          console.log(res.data)
-          setPosts(res.data)
-      })
-      .catch(err =>{
-          console.log(err)
-      })
-  }, [])
 
   
 
   async function fetchData() {
     
-    const cards: CreditCard[] = await axios.get('http://localhost:5000/api/cards',config)
-    setCardsData(cards);
-    if (cards && cards.length > 0) {
-      const selectedCard = cards.find((card) => card._id);
-      setState(selectedCard ?? initialState);
-    }
+
   }
 
   async function selectCard(id: any) {
@@ -88,24 +65,6 @@ export default function CardView() {
 
   }
 
-  const [id, setID] = useState("");
-  const [cardNumber, setCardNumber] = useState("");
-  const [cardHolder, setCardHolder] = useState("");
-  const [cardMonth, setCardMonth] = useState("");
-  const [cardYear, setCardYear] = useState("");
-  const [cardCvv, setCardCVV] = useState("");
-
-
-
-  const updateStateValues = useCallback(
-    (keyName: any, value: any) => {
-      setState({
-        ...state,
-        [keyName]: value || '',
-      });
-    },
-    [state],
-  );
 
   function handleSubmitAction() {
 
@@ -117,43 +76,16 @@ export default function CardView() {
       cardCvv: state.cardCvv,
     };
 
-    axios.put(`http://localhost:5000/api/cards/update/${state._id}`, cardData,config)
-
-      .then(function (response) {
-        console.log(response.data);
-        setID('');
-        setCardNumber('');
-        setCardHolder('');
-        setCardMonth('');
-        setCardYear('');
-        setCardCVV('');
-        window.location.replace(`/view-cards/${posts.booking_id}`);
-      });
-
   }
   function handleDeleteAction() {
-
-    axios.delete('http://localhost:5000/api/cards/delete/' + state._id,config)
-      .then(function (response) {
-        console.log(response.data);
-
-        window.location.replace(`/view-cards/${posts.booking_id}`);
-      });
 
   
   }
   const DeleteShow = () => {
 
-    axios.get("http://localhost:5000/api/staff/" + state._id,config)
-      .then(function (response) {
-
-        setShow(true)
-
-
-      })
-
 
   };
+  const updateStateValues=()=>{}
 
   return (
     <>
@@ -219,7 +151,7 @@ export default function CardView() {
 
                             <CardForm
                               selectedCreditCard={state}
-                              onUpdateState={updateStateValues}
+                               onUpdateState={updateStateValues}
                               setIsCardFlipped={setIsCardFlipped}
                               handleSubmitAction={handleSubmitAction}
                             >

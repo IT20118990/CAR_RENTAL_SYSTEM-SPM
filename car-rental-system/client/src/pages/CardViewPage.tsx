@@ -11,16 +11,6 @@ export default function CardViewPage() {
 
     const params = useParams();
     const [posts, setPosts] =useState<any>([]);
-    useEffect(()=> {
-        axios.get(`http://localhost:5000/api/bookings/getone/${params.booking_id}`)
-        .then(res => {
-            console.log(res.data)
-            setPosts(res.data)
-        })
-        .catch(err =>{
-            console.log(err)
-        })
-    }, [])
 
     return (
         <div>
@@ -37,7 +27,7 @@ export default function CardViewPage() {
                     <AddCard />
                 </div>
 
-            <Link to={`/add-payment/${posts.booking_id}`}><button type="button" className="btn btn-info  btn-grad float-end mt-5 ms-5" style={{ width: "250px", height: "50px", margin: "50px" }}>
+            <Link to={`/add-payment`}><button type="button" className="btn btn-info  btn-grad float-end mt-5 ms-5" style={{ width: "250px", height: "50px", margin: "50px" }}>
                     Back to Payment 
                 </button></Link>
  

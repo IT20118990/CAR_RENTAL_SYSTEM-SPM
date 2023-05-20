@@ -1,37 +1,29 @@
 const router = require("express").Router();
 const Card = require("../models/Card");
-const protect = require('../middleware/middleware.js');
-
 
 //CREATE CARD
-router.post("/",protect, async (req, res) => {
+router.post("/", async (req, res) => {
 
-  // console.log(req.user);
-req.body.userid = req.user._id;
-    const newCard = new Card(req.body);
-    // newCard.set(userid:req.user._id)
-  
-        try {
-          const savedCard = await newCard.save();
-          res.status(200).json(savedCard);
-        } catch (err) {
-          res.status(500).json(err);
-        }
-  
- 
-  
-  });
+  const newCard = new Card(req.body);
 
- //UPDATE CARD
-router.put("/update/:id",protect, async(req, res) => {
-    try {
-      const updatedCard = await Card.findOneAndUpdate({_id:req.params.id},
-        {
-          $set: req.body
-        },{new:true}
-      );
-     res.status(200).json(updatedCard);
-    
+  try {
+    const savedCard = await newCard.save();
+    res.status(200).json(savedCard);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+//UPDATE CARD
+router.put("/update/:id", async (req, res) => {
+  try {
+    const updatedCard = await Card.findOneAndUpdate({ _id: req.params.id },
+      {
+        $set: req.body
+      }, { new: true }
+    );
+    res.status(200).json(updatedCard);
+
   } catch (err) {
     res.status(500).json(err);
   }
@@ -39,9 +31,9 @@ router.put("/update/:id",protect, async(req, res) => {
 
 
 //DELETE CARD
-router.delete("/delete/:id",protect, async (req, res) => {
+router.delete("/delete/:id", async (req, res) => {
   try {
-    const card = await Card.findOneAndDelete({_id:req.params.id});
+    const card = await Card.findOneAndDelete({ _id: req.params.id });
     try {
       await card.delete();
       res.status(200).json("Card has been deleted...");
@@ -54,7 +46,7 @@ router.delete("/delete/:id",protect, async (req, res) => {
 });
 
 //GET CARD
-router.get("/:id",protect, async (req, res) => {
+router.get("/:id", async (req, res) => {
   try {
     const card = await Card.findOne({ 'id': req.params.id });
     res.status(200).json(card);
@@ -73,10 +65,10 @@ router.get("/:id",protect, async (req, res) => {
 //     }
 //   });
 
-  //GET ALL CARD
-router.get("/",protect, async (req, res) => {
+//GET ALL CARD
+router.get("/", async (req, res) => {
   try {
-    const card = await Card.find({ 'userid': req.user._id});
+    const card = await Card.find({ 'userid': req.user._id });
     res.status(200).json(card);
   } catch (err) {
     res.status(500).json(err);
@@ -94,4 +86,4 @@ router.get("/",protect, async (req, res) => {
 // });
 
 
-  module.exports = router;
+module.exports = router;

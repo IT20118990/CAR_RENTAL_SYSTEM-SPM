@@ -23,8 +23,8 @@ export default function Home() {
             <div className="carousel-item active" data-mdb-interval="2500">
               <img src="https://global.toyota/pages/models/images/20191018/kv/yaris_w1920_01.jpg" className="d-block w-100" style={{ height: "500px", opacity: "0.7" }} alt="Exotic Fruits" />
               <div className="carousel-caption d-none d-md-block">
-                <h1>Welcome to GoRent !!</h1><br />
-                <p className="fst-italic"><h4>You can join with us. You can get the best service from us.</h4></p>
+                <h1>Welcome to Organic Waste Connection !!</h1><br />
+                <p className="fst-italic"><h4>You can join with us for the best service from us.</h4></p>
               </div>
             </div>
 
@@ -32,16 +32,16 @@ export default function Home() {
             <div className="carousel-item" data-mdb-interval="2500">
               <img src="https://global.toyota/pages/news/images/2019/12/20/0001/20191220_01_kv_w1920.jpg" className="d-block w-100" style={{ height: "500px", opacity: "0.7" }} alt="Wild Landscape" />
               <div className="carousel-caption d-none d-md-block">
-                <h1>Welcome to GoRent !!</h1><br />
-                <p className="fst-italic"><h4>You can join with us. You can get the best service from us.</h4></p>
+                <h1>Welcome to Organic Waste Connection !!</h1><br />
+                <p className="fst-italic"><h4>You can join with us for the best service from us.</h4></p>
               </div>
             </div>
 
             <div className="carousel-item" data-mdb-interval="2500">
               <img src="https://global.toyota/pages/models/images/mirai/mirai_w1920_02.jpg" className="d-block w-100" style={{ height: "500px", opacity: "0.7" }} alt="Camera" />
               <div className="carousel-caption d-none d-md-block">
-                <h1>Welcome to GoRent !!</h1><br />
-                <p className="fst-italic"><h4>You can join with us. You can get the best service from us.</h4></p>
+                <h1>Welcome to Organic Waste Connection !!</h1><br />
+                <p className="fst-italic"><h4>You can join with us for the best service from us.</h4></p>
               </div>
             </div>
 

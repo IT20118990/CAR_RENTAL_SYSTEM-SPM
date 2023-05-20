@@ -20,14 +20,8 @@ const CardSchema = new mongoose.Schema(
     },
     cardCvv:{
       type: String,
-      required:true,
-    },
-    userid:{
-      type: mongoose.Schema.Types.ObjectId,
-      ref:'User',
-      required:true,
-    },
-   
+      required:true,-------------------------------------------------------------------------
+    },  
 
   },
   { timestamps: true }

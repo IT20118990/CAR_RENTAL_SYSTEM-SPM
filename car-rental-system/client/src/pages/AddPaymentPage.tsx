@@ -10,6 +10,7 @@ import { useParams } from 'react-router-dom';
 import {
   CreditCard,
 } from '../components/Card/CreditCard';
+import './styles.css'
 
 const initialState: CreditCard = {
   _id: '',
@@ -33,19 +34,13 @@ export default function AddPayment() {
   const [no_of_days, setNoOfDays] = useState("");
   const [type_of_service, setTypeOfService] = useState("");
   const [cardNumber, setCardNumber] = useState("");
-  const [payment_status,setPaymentStatus] = useState("");
+  const [payment_status, setPaymentStatus] = useState("");
 
   const navigate = useNavigate();
 
   const params = useParams();
 
-  
-  useEffect(() => {
-    var cost = (posts.type_of_service === 'With Driver') ? (parseInt(posts.cost_per_day) + 4000) * (parseInt(posts.no_of_days)) + "LKR" : (parseInt(posts.cost_per_day)) * (parseInt(posts.no_of_days)) + "LKR"
-    setCostPerDay(cost);
-    console.log(cost)
 
-  }, [posts])
 
   const [cardsDatas, setCardsDatas] = useState<CreditCard[]>([]);
 
@@ -65,19 +60,19 @@ export default function AddPayment() {
     fetchCard()
     axios.get(`http://localhost:5000/api/bookings/getone/${params.booking_id}`)
 
-    .then(res => {
-    
-      console.log(res.data)
-      setPosts(res.data)
-      setBookingId(res.data['booking_id']);
-      setName(res.data['name']);       
-      setContactNumber(res.data['contact_number']);
-      
+      .then(res => {
 
-    })
-    .catch(err => {
-      console.log(err)
-    })
+        console.log(res.data)
+        setPosts(res.data)
+        setBookingId(res.data['booking_id']);
+        setName(res.data['name']);
+        setContactNumber(res.data['contact_number']);
+
+
+      })
+      .catch(err => {
+        console.log(err)
+      })
   }, [])
 
 
@@ -90,146 +85,84 @@ export default function AddPayment() {
     contact_number,
   }
 
-  const BookingData={
-    payment_status:'paid'
-  }
-
-  
-
-  function submitForm(e: { preventDefault: () => void; }) {
-    e.preventDefault();
-    if (card.length === 0) {
-      swal(" Fields Cannot empty !", "Please enter all data !", "error");
-    } else {
-      console.log(PayData);
-      axios.post("http://localhost:5000/api/payments", PayData)
-        .then(function (response: any) {
-          console.log(response);
-          setBookingId("");
-          setName("");
-          setCard("");
-          setCostPerDay("");
-          setContactNumber("");
-          axios.put("http://localhost:5000/api/bookings/update/"+booking_id,BookingData)
-            .then(function(res) {
-                console.log(res);
-            })
-            .catch(function(error) {
-                console.log(error);
-                alert("Not updated");
-            });
-          swal({ text: "Payment Successful", icon: "success",  buttons: {
-            cancel: { text: 'Cancel' },
-            confirm: { text: 'Confirm' },
-          }}).then((res: any)=>{
-            navigate(`/paymentview/${response.data.payment_id}/${response.data.booking_id}`,{replace:true});
-          })
-
-          console.log(response.data)
-        })
-
-    }
-
-  }
-
-
-
-
 
   return (
     <div>
       <Header />
       <div className='background-radial-gradient'>
         <div className="container">
+          <div className="row"> <Link to={`/view-cards`}><button type="button" className="btn btn-info btn-grad" style={{ width: "250px", height: "50px", float: "right" }}>
+            see Your Cards
+          </button></Link></div>
           <div className="row">
             <div className="col">
+              <div className='card-container '>
+                <div className="card" style={{ height: "700px", background: "linear-gradient(140deg, rgba(72, 115, 150, 1) 50%, rgba(57, 108, 150, 0.65) 65%, rgba(42, 102, 150, 0.6) 50%, rgba(27, 95, 150, 0.95) 80%, rgba(12, 88, 150, 1) 90%, rgba(0, 83, 150, 0.8) 70%)", marginTop: "50px" }}>
+                  <div className="card-body px-4 px-md-5">
+                    <section className="mb-4">
 
-              <div className="card" style={{ height: "700px", background: "linear-gradient(140deg, rgba(72, 115, 150, 1) 50%, rgba(57, 108, 150, 0.65) 65%, rgba(42, 102, 150, 0.6) 50%, rgba(27, 95, 150, 0.95) 80%, rgba(12, 88, 150, 1) 90%, rgba(0, 83, 150, 0.8) 70%)", marginTop: "50px" }}>
-                <div className="card-body px-4 px-md-5">
-                  <section className="mb-4">
+                      <h2 className="h1-responsive font-weight-bold text-center my-4" style={{ color: "hsl(218, 81%, 95%)" }}>Place Your Instalment Here</h2>
 
+                      <div className="row">
 
+                        <div className="col-md-9 mb-md-0 mb-5" >
+                          <form id="contact-form" name="contact-form" action="mail.php" method="POST" >
 
+                            <div className="form-floating mb-3">
+                              <input className="form-control" id="bookingid" type="text" placeholder="Booking ID"  />
+                              <label htmlFor="bookingid" style={{ fontSize: "16px" }} >Booking ID</label>
 
+                            </div>
+                            <br />
+                            <div className="form-floating mb-3">
+                              <input className="form-control" id="name" type="text" placeholder="Name" />
+                              <label htmlFor="name" style={{ fontSize: "16px" }}>Name</label>
 
+                            </div>
+                            <br />
+                            <div className="form-floating mb-3">
+                              <input className="form-control" id="contact" type="text" placeholder="Contact Number"  />
+                              <label htmlFor="contact" style={{ fontSize: "16px" }}>Contact Number</label>
 
+                            </div>
+                            <br />
 
+                            <select className="form-select mb-4 text-grey" aria-label="Disabled select example" onChange={(e) => setCard(e.target.value)}>
+                              <option selected style={{ fontSize: "16px" }}>credit Card</option>
+                              <option selected style={{ fontSize: "16px" }}>visa Card</option>
+                              <option selected style={{ fontSize: "16px" }}>Select a Card</option>
+                              <option selected style={{ fontSize: "16px" }}>Select a Card</option>
+                              {cardsDatas.map(card => {
+                                // eslint-disable-next-line react/jsx-key
+                                return <option value={card.cardNumber}>{card.cardNumber}</option>
+                              })}
+                            </select>
 
-                    <h2 className="h1-responsive font-weight-bold text-center my-4" style={{ color: "hsl(218, 81%, 95%)" }}>Place Your Instalment Here</h2>
+                            <br />
 
+                            <div className="form-floating mb-3">
+                              <input className="form-control" id="amount" type="text" placeholder="Amount" onChange={(e) => setCostPerDay(e.target.value)} />
+                              <label htmlFor="amount" style={{ fontSize: "16px" }}>Amount</label>
 
-                    <div className="row">
+                            </div>
 
-                      <div className="col-md-9 mb-md-0 mb-5" >
-                        <form id="contact-form" name="contact-form" action="mail.php" method="POST" onSubmit={submitForm}>
-
-                          <div className="form-floating mb-3">
-                            <input className="form-control" id="bookingid" type="text" placeholder="Booking ID" value={posts.booking_id} onChange={(e) => setBookingId(e.target.value)} readOnly />
-                            <label htmlFor="bookingid" style={{ fontSize: "16px" }} >Booking ID</label>
-
-                          </div>
+                          </form>
                           <br />
-                          <div className="form-floating mb-3">
-                            <input className="form-control" id="name" type="text" placeholder="Name" value={posts.name} onChange={(e) => setName(e.target.value)} readOnly />
-                            <label htmlFor="name" style={{ fontSize: "16px" }}>Name</label>
 
+                          <div className="text-center">
+                            <Link to="/payment-view">
+                              <button type="button" className="btn btn-primary" style={{ width: "400px" }} >
+                                Pay Now
+                              </button>
+                            </Link>
                           </div>
-                          <br />
-                          <div className="form-floating mb-3">
-                            <input className="form-control" id="contact" type="text" placeholder="Contact Number" value={posts.contact_number} onChange={(e) => setContactNumber(e.target.value)} readOnly/>
-                            <label htmlFor="contact" style={{ fontSize: "16px" }}>Contact Number</label>
-
-                          </div>
-                          <br />
-
-                          <select className="form-select mb-4 text-grey" aria-label="Disabled select example" onChange={(e) => setCard(e.target.value)}>
-                            <option selected style={{ fontSize: "16px" }}>Select a Card</option>
-
-
-                            {cardsDatas.map(card => {
-                              // eslint-disable-next-line react/jsx-key
-                              return <option value={card.cardNumber}>{card.cardNumber}</option>
-                            })}
-                          </select>
-
-                          <br />
-
-                          <div className="form-floating mb-3">
-                            <input className="form-control" id="amount" type="text" placeholder="Amount" value={(posts.type_of_service === 'With Driver') ? (parseInt(posts.cost_per_day) + 4000) * (parseInt(posts.no_of_days)) + "LKR" : (parseInt(posts.cost_per_day)) * (parseInt(posts.no_of_days)) + "LKR"} onChange={(e) => setCostPerDay(e.target.value)}/>
-                            <label htmlFor="amount" style={{ fontSize: "16px" }}>Amount</label>
-
-                          </div>
-
-                        </form>
-                        <br />
-
-                        <div className="text-center">
-
-                          <Link to="/payment-view">
-                            <button type="button" className="btn btn-primary" style={{ width: "400px" }} onClick={submitForm}>
-                              Pay Now
-                            </button>
-                          </Link>
-
-
+                          <div className="status"></div>
                         </div>
-
-
-                        <div className="status"></div>
                       </div>
+                    </section>
+                  </div></div></div>
 
-
-
-                    </div>
-
-                  </section>
-
-                </div></div>
               <br />
-            </div>
-
-            <div className="col-5 mt-5" style={{ marginLeft: "80px" }}>
-              <BookingDetails />
             </div>
             <br />
           </div>

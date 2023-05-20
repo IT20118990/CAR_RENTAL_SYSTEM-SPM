@@ -103,3 +103,11 @@
   text-decoration: none;
 }
 
+.card-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 70%;
+  margin: 0 auto;
+}
+
